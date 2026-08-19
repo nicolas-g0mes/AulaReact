@@ -4,6 +4,7 @@ import Exemplo2 from "./Exemplo2";
 import Exercicio1 from "./Exercicio1";
 import Exercicio2 from "./Exercicio2";
 import Exercicio3 from "./Exercicio3";
+import Exercicio4 from "./Exercicio4";
 
 export default function App()
 {
@@ -48,6 +49,15 @@ export default function App()
 
         <Exercicio3 nota1={7.5} nota2={9.5} />
         <Exercicio3 nota1={3} nota2={6.5} />       
+      </div>
+
+      <div className="card">
+        <h3>Chamadas para o componente Exercicio4</h3>
+
+        <Exercicio4 tipo="retangulo" base="10" altura="5" />
+        <Exercicio4 tipo="triangulo" base="10" altura="5" />
+        <Exercicio4 tipo="quadrado" base="10" altura="10" />
+
       </div>
 
     </div>
