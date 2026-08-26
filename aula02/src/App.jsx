@@ -5,6 +5,7 @@ import Exercicio1 from "./Exercicio1";
 import Exercicio2 from "./Exercicio2";
 import Exercicio3 from "./Exercicio3";
 import Exercicio4 from "./Exercicio4";
+import Exercicio5 from "./Exercicio5";
 
 export default function App()
 {
@@ -58,6 +59,12 @@ export default function App()
         <Exercicio4 tipo="triangulo" base="10" altura="5" />
         <Exercicio4 tipo="quadrado" base="10" altura="10" />
 
+      </div>
+
+      <div className="card">
+        <h3>Chamadas para o componente Exercicio5</h3>
+        <Exercicio5 quantidade="10" />
+        <Exercicio5 quantidade="20" />
       </div>
 
     </div>

@@ -1,4 +1,4 @@
-export default Exercicio4 ({tipo, base, altura})
+export default function Exercicio4 ({tipo, base, altura})
 {
     let area =0;
 
@@ -14,5 +14,5 @@ export default Exercicio4 ({tipo, base, altura})
                 Polígono {tipo} de base {base} e altura {altura} possui a Área de {area}.
             </p>
         </div>
-    );
+    )
 }
