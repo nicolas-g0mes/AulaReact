@@ -17,23 +17,31 @@ export default function Exercicio2()
     ]);
 
     const[hamburguerSelecionado, setHamburguerSelecionado] = useState(-1);
+    const[tipoServicoSelecionado, setTipoServicoSelecionado] = useState(-1);
     const[quantidade, setQuantidade] = useState(0);
     const[pedido, setPedido] = useState([]);
 
     function adicionar() {
-        if (hamburguerSelecionado >= 0){
+        if (hamburguerSelecionado >= 0 && tipoServicoSelecionado >= 0){
+            const hamburguerEscolhido = hamburgueres[hamburguerSelecionado];
+            const servicoEscolhido = tipoServico[tipoServicoSelecionado];
             const novo = {
-                hamburguer : hamburgueres[hamburguerSelecionado].nome,
-                quantidade : quantidade,
-                preco : hamburgueres[hamburguerSelecionado].preco,
-                total : quantidade * hamburgueres[hamburguerSelecionado].preco
+                hamburguer : hamburguerEscolhido.nome,
+                quantidade : Number(quantidade),
+                preco : hamburguerEscolhido.preco,
+                taxa : servicoEscolhido.taxa,
+                total : Number(quantidade) * hamburguerEscolhido.preco + servicoEscolhido.taxa
             }
 
             setPedido([...pedido,novo]);
             setQuantidade(0);
+            setTipoServicoSelecionado(-1);
+        }
+        else if (hamburguerSelecionado < 0) {
+            alert("Selecione um hambúrguer")
         }
         else {
-            alert("Selecione um hambúrguer")
+            alert("Selecione um tipo de serviço")
         }
     }
 
@@ -55,18 +63,18 @@ export default function Exercicio2()
                 <form>
                     <p>
                         Escolha seu hambúrguer <br />
-                        <select value={hamburguerSelecionado} onChange={(e) => setHamburguerSelecionado(e.target.value)}>
+                        <select value={hamburguerSelecionado} onChange={(e) => setHamburguerSelecionado(Number(e.target.value))}>
                         <option value="-1">Selecione uma opção</option> 
                         
                         {hamburgueres.map(
                             (hamburguer, index) => (
-                                <option value={index}>{hamburguer.nome} - R$ {hamburguer.preco.toFixed(2)}</option>
+                                <option key={index} value={index}>{hamburguer.nome} - R$ {hamburguer.preco.toFixed(2)}</option>
                             )
                         )}
                         
                         </select>
-                    </p>
-
+                        </p>
+                        
                     <p>
                         {hamburguerSelecionado >= 0 ? hamburgueres[hamburguerSelecionado].nome : "Nenhum hambúrguer selecionado !"}
                     </p>
@@ -75,7 +83,22 @@ export default function Exercicio2()
                         Digite a quantidade <br />
                         <input  type="number"
                                 value={quantidade}
-                                onChange={(e) => setQuantidade(e.target.value)}/>
+                                onChange={(e) => setQuantidade(Number(e.target.value))}/>
+                    </p>
+
+                    <p>
+                        Escolha o tipo do serviço <br />
+                        <select value={tipoServicoSelecionado} onChange={(e) => setTipoServicoSelecionado(Number(e.target.value))}>
+                            <option value="-1">Selecione uma opção</option>
+                            {tipoServico.map(
+                                (servico, index) => (
+                                    <option key={index} value={index}>{servico.tipo} - R$ {servico.taxa.toFixed(2)}</option>
+                                )
+                            )}
+                        </select>
+                        <p>
+                            Serviço selecionado: {tipoServicoSelecionado >= 0 ? `${tipoServico[tipoServicoSelecionado].tipo} - R$ ${tipoServico[tipoServicoSelecionado].taxa.toFixed(2)}` : "Nenhum serviço selecionado"}
+                        </p>
                     </p>
 
                     <p>
@@ -102,6 +125,7 @@ export default function Exercicio2()
                                 <td>{pedido.hamburguer}</td>
                                 <td>{pedido.quantidade}</td>
                                 <td>R$ {pedido.preco}</td>
+                                <td>R$ {pedido.taxa}</td>
                                 <td>R$ {pedido.total}</td>
                                 <td>
                                     <a href="#" onClick={() => excluir(index)}>Excluir</a>
@@ -111,6 +135,10 @@ export default function Exercicio2()
                     )}
                     </table>
                 ) : "Não há pedidos."}
+
+                <p>
+                    O valor total dos pedidos é R$ {totalPedidos.toFixed(2)}.
+                </p>
 
                 <p>
                     <Link to="/">Voltar</Link>
