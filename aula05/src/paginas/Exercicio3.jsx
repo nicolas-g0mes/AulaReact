@@ -36,13 +36,15 @@ export default function Exercicio3()
             const novo = {
                 carro : carroEscolhido.nome,
                 dias : Number(dias),
-                preco : carroEscolhido,preco,
-                opcionais : opcionalEscolhido.opcionais,
-                total : Number(dias) * carroEscolhido.preco + opcionalEscolhido.opcionais
-            }
+                precoDiario : carroEscolhido.precoDiario,
+                opcionais : opcionalEscolhido.nome,
+                precoOpcional : opcionalEscolhido.preco,
+                total : Number(dias) * carroEscolhido.precoDiario + opcionalEscolhido.preco
+            };
 
-            setEscolha([...escolha,novo]);
+            setEscolha([...escolha, novo]);
             setDias(0);
+            setCarroSelecionado(-1);
             setOpcionalSelecionado(-1);
         }
         else if (carroSelecionado < 0) {
@@ -70,7 +72,7 @@ export default function Exercicio3()
                 <form>
                     <p>
                         Escolha o carro <br />
-                        <select value={carroSelecionado} onChange={(e) => setCarroSelecionado(e.target.value)}>
+                        <select value={carroSelecionado} onChange={(e) => setCarroSelecionado(Number(e.target.value))}>
                         <option value="-1">Selecione uma opção</option>
                         
                         {carros.map(
@@ -80,9 +82,76 @@ export default function Exercicio3()
                         )}
                         </select>
                     </p>
+
+                    <p>
+                        {carroSelecionado >= 0 ? carros[carroSelecionado].nome : "Nenhum carro selecionado !"}
+                    </p>
+
+                    <p>
+                        Digite o numero de dias
+                        <input type="number"
+                               value={dias}
+                               onChange={(e) => setDias(e.target.value)} />
+                    </p>
+                    <p>
+                        Escolha o opcional
+                    <select value={opcionalSelecionado} onChange={(e) => setOpcionalSelecionado(Number(e.target.value))}>
+                        <option value="-1">Selecione uma opção</option>
+
+                        {opcionais.map(
+                            (opcionais, index) => (
+                                <option value={index}>{opcionais.nome} - R$ {opcionais.preco.toFixed(2)}</option>
+                            )
+                        )}
+                    </select>
+                    </p>
+
+                    <p>
+                        Opcional selecionado: {opcionalSelecionado >= 0 ? `${opcionais[opcionalSelecionado].nome} - R$ ${opcionais[opcionalSelecionado].preco.toFixed(2)}` : "Nenhum"}
+                    </p>
+
+                    <p>
+                        <input type="button"
+                               value="Adicionar"
+                               onClick={adicionar} />
+                    </p>
                 </form>
 
-                              
+                {escolha.length > 0 ? (
+
+                    <table>
+                        <tr>
+                            <th>Carro</th>
+                            <th>Dias</th>
+                            <th>Preço Diário</th>
+                            <th>Opcional</th>
+                            <th>Preço Opcional</th>
+                            <th>Total</th>
+                            <th></th>                            
+                        </tr>
+
+                    {escolha.map(
+
+                        (escolha, index) => (
+                            <tr key={index}>
+                                <td>{escolha.carro}</td>
+                                <td>{escolha.dias}</td>
+                                <td>{escolha.precoDiario.toFixed(2)}</td>
+                                <td>{escolha.opcionais}</td>
+                                <td>{escolha.precoOpcional.toFixed(2)}</td>
+                                <td>{escolha.total.toFixed(2)}</td>
+                                <td>
+                                    <a href="#" onClick={() => excluir(index)}>Excluir</a>
+                                </td>
+                            </tr>
+                        )
+                    )}
+                    </table>
+                ) : "Não há pedidos."}
+
+                <p>
+                    O valor total dos pedidos é R$ {totalEscolha.toFixed(2)}.
+                </p>
 
                 <p>
                     <Link to="/">Voltar</Link>
