@@ -136,10 +136,10 @@ export default function Exercicio3()
                             <tr key={index}>
                                 <td>{escolha.carro}</td>
                                 <td>{escolha.dias}</td>
-                                <td>{escolha.precoDiario.toFixed(2)}</td>
+                                <td>R$ {escolha.precoDiario.toFixed(2)}</td>
                                 <td>{escolha.opcionais}</td>
-                                <td>{escolha.precoOpcional.toFixed(2)}</td>
-                                <td>{escolha.total.toFixed(2)}</td>
+                                <td>R$ {escolha.precoOpcional.toFixed(2)}</td>
+                                <td>R$ {escolha.total.toFixed(2)}</td>
                                 <td>
                                     <a href="#" onClick={() => excluir(index)}>Excluir</a>
                                 </td>
