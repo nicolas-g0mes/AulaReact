@@ -25,7 +25,7 @@ export default function Exercicio2()
     const[resultado, setResultado] = useState();
 
     function adicionar() {
-        if (sessaoSelecionada >= 0 && tipoSelecionado >= 0) {
+        if (sessaoSelecionada >= 0 ){
             const sessaoEscolhida = sessoes[sessaoSelecionada];
             const tipoEscolhido = tipos[tipoSelecionado];
             const novo = {

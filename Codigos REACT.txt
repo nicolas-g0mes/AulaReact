@@ -1,0 +1,18 @@
+Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+---------------------------------------------------
+Checar se deu certo:
+npm -v
+---------------------------------------------------
+npm install create -g
+---------------------------------------------------
+Criando a pasta da aula:
+npm create vite@latest (nome da pasta Ex: aula01)
+
+--selecionar--
+-React
+-JavaScript
+Oxlint
+
+---------------------------------------------------
+Instalando o gerenciamento das rotas:
+npm install react-router-dom
