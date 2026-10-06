@@ -25,16 +25,18 @@ export default function Exercicio2()
     const[resultado, setResultado] = useState();
 
     function adicionar() {
-        if (sessaoSelecionada >= 0 ){
+        const quantidadeNumero = Number(quantidade);
+
+        if (sessaoSelecionada >= 0 && tipoSelecionado >= 0 && quantidadeNumero > 0) {
             const sessaoEscolhida = sessoes[sessaoSelecionada];
             const tipoEscolhido = tipos[tipoSelecionado];
             const novo = {
                 sessao : sessaoEscolhida.nome,
-                quantidade : Number(quantidade),
+                quantidade : quantidadeNumero,
                 preco : sessaoEscolhida.preco,
                 tipo : tipoEscolhido.nome,
                 desconto : tipoEscolhido.desconto,
-                total : sessaoEscolhida.preco * Number(quantidade) * (1 - tipoEscolhido.desconto/100)
+                total : sessaoEscolhida.preco * quantidadeNumero * (1 - tipoEscolhido.desconto/100)
             };
 
             setEscolha([...escolha, novo]);
@@ -42,11 +44,8 @@ export default function Exercicio2()
             setSessaoSelecionada(-1);
             setTipoSelecionado(-1);
         }
-        else if (sessaoSelecionada < 0) {
-            alert("Selecione um sessão")
-        }
         else {
-            alert("Selecione um tipo de ingresso")
+            alert("Selecione uma sessão, um tipo de ingresso e informe uma quantidade maior que zero!")
         }
     }
 
@@ -87,6 +86,7 @@ export default function Exercicio2()
                         <p>
                             Digite a quantidade de ingressos
                             <input type="number"
+                                    min="1"
                                     value={quantidade}
                                     onChange={(e) => setQuantidade(e.target.value)}/>
                         </p>

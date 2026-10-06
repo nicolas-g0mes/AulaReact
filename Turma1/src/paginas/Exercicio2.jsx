@@ -4,56 +4,56 @@ import {useState} from "react";
 
 export default function Exercicio2()
 {
-    const [pizzas, setPizzas] = useState([
-        {nome : "Mussarela", preco : 35.00},
-        {nome : "Calabresa", preco : 38.00},
-        {nome : "Portuguesa", preco : 40.00},
-        {nome : "Frango com Catupiry", preco : 42.00},
-        {nome : "Quatro Queijos", preco : 45.00}
-    ]);
+    const [pizzas, setPizza] = useState ([
+        {sabor : "Mussarela", preco : 35.00},
+        {sabor : "Calabresa", preco : 38.00},
+        {sabor : "Portuguesa", preco : 40.00},
+        {sabor : "Frango com Catupiry", preco : 42.00},
+        {sabor : "Quatro Queijos", preco : 45.00}
+    ])
 
-    const [tipos, setServico] = useState([
-            {tipo : "Retirada", taxa : 0.00},
-            {tipo : "Entrega", taxa : 8.00}
-        ]);
+    const [servicos, setServico] = useState ([
+        {tipo : "Retirada", taxa : 0.00},
+        {tipo : "Entrega", taxa : 8.00}
+    ])
 
-    const[pizzaSelecionada, setPizzaSelecionada] = useState(-1);
-    const[servicoSelcionado, setServicoSelecionado] = useState(-1);
+    const [pizzaSelecionada, setPizzaSelecionada] = useState (-1);
+    const [servicoSelecionado, setServicoSelecionado] = useState (-1);
     const[quantidade, setQuantidade] = useState(0);
-    const[pedido, setPedido] = useState([]);
+    const[escolha, setEscolha] = useState([]);
+    const[resultado, setResultado] = useState();
 
-    function adicionar(){
-        if (pizzaSelecionada >= 0 && servicoSelecionado >= 0) {
+    function adicionar() {
+        const quantidadeNumero = Number(quantidade);
+
+        if (pizzaSelecionada >= 0 && servicoSelecionado >= 0 && quantidadeNumero > 0) {
             const pizzaEscolhida = pizzas[pizzaSelecionada];
-            const servicoEscolhido = tipos[servicoSelcionado];
-            const quantidadeNumero = Number(quantidade);
-
+            const servicoEscolhido = servicos[servicoSelecionado];
             const novo = {
-                pizza : pizzaEscolhida.nome,
+                pizza : pizzaEscolhida.sabor,
                 quantidade : quantidadeNumero,
-                tipo: servicoEscolhido.tipo,
                 preco : pizzaEscolhida.preco,
+                servico : servicoEscolhido.tipo,
                 taxa : servicoEscolhido.taxa,
-                total : (quantidadeNumero * pizzaEscolhida.preco) + servicoEscolhido.taxa
-            }
+                total : (pizzaEscolhida.preco * quantidadeNumero) + servicoEscolhido.taxa
+            };
 
-            setPedido([...pedido, novo]);
-
-            setPizzaSelecionada(-1);
+             setEscolha([...escolha, novo]);
             setQuantidade(0);
+            setPizzaSelecionada(-1);
             setServicoSelecionado(-1);
         }
         else {
-            alert("Selecione uma pizza e um tipo de entrega!")
+            alert("Selecione um sabor, um tipo de serviço e informe uma quantidade maior que zero!")
         }
     }
 
-    function excluir(index) {
-        setPedido( pedido.toSpliced(index,1));
+    function excluir(index){
+        setEscolha( escolha.toSpliced(index,1));
     }
 
-    const totalPedidos = pedido.reduce(
-        (soma, pedido) => soma + pedido.total,
+    const totalEscolha = escolha.reduce(
+        (soma, escolha) => soma + escolha.total,
         0
     )
 
@@ -65,57 +65,55 @@ export default function Exercicio2()
 
                 <form>
                     <p>
-                        Escolha a sua pizza <br />
+                        Escolha o sabor da pizza
                         <select value={pizzaSelecionada} onChange={(e) => setPizzaSelecionada(Number(e.target.value))}>
-                        <option value="-1">Selecione uma opção</option>
-                        
-                        {pizzas.map(
+                            <option value="-1">Selecione uma opção</option>
 
-                            (pizza, index) => (
-                                <option value={index}>{pizza.nome} - R$ {pizza.preco.toFixed(2)}</option>
-                            )
-                        )}
+                            {pizzas.map(
+                                (pizza, index) => (
+                                    <option value={index}>{pizza.sabor} - R$ {pizza.preco.toFixed(2)}</option>
+                                )
+                            )}
                         </select>
                     </p>
 
                     <p>
-                        {pizzaSelecionada >= 0 ? pizzas[pizzaSelecionada].nome : "Não pizza selecionada !"}
+                        {pizzaSelecionada >= 0 ? pizzas[pizzaSelecionada].sabor : "Nenhum sabor selecionado!"}
                     </p>
 
                     <p>
-                        Digite a quantidade pizzas <br />
+                        Digite a quantidade
                         <input type="number"
-                               value={quantidade}
-                               onChange={(e) => setQuantidade(e.target.value)} />
+                                min="1"
+                                value={quantidade}
+                                onChange={(e) => setQuantidade(e.target.value)}/>
                     </p>
 
                     <p>
-                        Escolha o tipo de entrega <br />
-                        <select value={servicoSelcionado} onChange={(e) => setServicoSelecionado(Number(e.target.value))}>
-                        <option value="-1">Selecione uma opção</option>
+                        Escolha o tipo do ingresso
+                        <select value={servicoSelecionado} onChange={(e) => setServicoSelecionado(Number(e.target.value))}>
+                            <option value="-1">Selecione uma opção</option>
                         
-                        {tipos.map(
-
-                            (tipo, index) => (
-                                <option value={index}>{tipo.tipo} - R$ {tipo.taxa.toFixed(2)}</option>
+                        {servicos.map(
+                            (servico, index) => (
+                                <option value={index}>{servico.tipo} - Taxa R$ {servico.taxa.toFixed(1)}</option>
                             )
                         )}
                         </select>
                     </p>
 
                     <p>
-                        Entrega selecionada : {servicoSelcionado >= 0 ? tipos[servicoSelcionado].tipo : "Nenhum"}
+                        Serviço selecionado: {servicoSelecionado >= 0 ? `${servicos[servicoSelecionado].tipo} (Taxa: R$ ${servicos[servicoSelecionado].taxa.toFixed(2)})` : "Nenhum"}
                     </p>
 
                     <p>
                         <input type="button"
-                               value="Adicionar"
-                               onClick={adicionar} />
+                                value="Adicionar"
+                                onClick={adicionar} />
                     </p>
                 </form>
 
-                {pedido.length > 0 ? (
-
+                {escolha.length > 0 ? (
                     <table>
                         <tr>
                             <th>Pizza</th>
@@ -126,28 +124,26 @@ export default function Exercicio2()
                             <th></th>
                         </tr>
 
-                    {pedido.map(
-
-                        (pedido, index) => (
-                            <tr key={index}>
-                                <td>{pedido.pizza}</td>
-                                <td>{pedido.quantidade}</td>
-                                <td>R$ {pedido.preco.toFixed(2)}</td>
-                                <td>R$ {pedido.taxa.toFixed(2)}</td>
-                                <td>R$ {pedido.total.toFixed(2)}</td>
-                                <td>
-                                    <a href="#" onClick={() => excluir(index)}>Excluir</a>
-                                </td>
-                            </tr>
-                        )
-                    )}
+                        {escolha.map(
+                            (escolha,index) => (
+                                <tr key={index}>
+                                    <td>{escolha.pizza}</td>
+                                    <td>{escolha.quantidade.toFixed(0)}</td>
+                                    <td>R$ {escolha.preco.toFixed(2)}</td>                                    
+                                    <td>R$ {escolha.taxa.toFixed(2)}</td>
+                                    <td>R$ {escolha.total.toFixed(2)}</td>
+                                    <td>
+                                        <a href="#" onClick={() => excluir(index)}>Excluir</a>
+                                    </td>
+                                </tr>
+                            )
+                        )}
                     </table>
-                ) : "Não há pedidos."}
+                    ) : "Não há pedidos."}
 
-                <p>
-                    O valor total dos pedidos é R$ {totalPedidos.toFixed(2)}.
-                </p>
-
+                    <p>
+                        O valor total da venda é R$ {totalEscolha.toFixed(2)}.
+                    </p>
                 <p>
                     <Link to="/">Voltar</Link>
                 </p>
