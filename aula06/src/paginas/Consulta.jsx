@@ -40,6 +40,7 @@ export default function Consulta()
                 <th>Nome</th>
                 <th>Cidade</th>
                 <th>Estado</th>
+                <th></th>
               </tr>
 
               {alunos.map(
@@ -48,6 +49,9 @@ export default function Consulta()
                     <td>{aluno.nome}</td>
                     <td>{aluno.cidade}</td>
                     <td>{aluno.estado}</td>
+                    <td>
+                      <Link to={"/visualizar/" + aluno.codigo}>Visualizar</Link>
+                    </td>
                   </tr>
                 )
               )}
