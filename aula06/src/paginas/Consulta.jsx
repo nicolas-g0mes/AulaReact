@@ -41,6 +41,9 @@ export default function Consulta()
                 <th>Cidade</th>
                 <th>Estado</th>
                 <th></th>
+
+                <th></th>
+                <th></th>
               </tr>
 
               {alunos.map(
@@ -51,6 +54,12 @@ export default function Consulta()
                     <td>{aluno.estado}</td>
                     <td>
                       <Link to={"/visualizar/" + aluno.codigo}>Visualizar</Link>
+                    </td>
+                    <td>
+                      <Link to={"/alteracao/" + aluno.codigo}>Alterar</Link>
+                    </td>
+                    <td>
+                      <Link to={"/exclusao/" + aluno.codigo}>Excluir</Link>
                     </td>
                   </tr>
                 )
