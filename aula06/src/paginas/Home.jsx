@@ -15,6 +15,20 @@ export default function Home()
                     <li><Link to="/cadastro">Cadastro de Novos Alunos</Link></li>
                 </ul>
 
+                <h3>Professores e Disciplinas</h3>
+
+                <ul>
+                    <li><Link to="/professores">Professores</Link></li>
+                    <li><Link to="/disciplinas">Disciplinas</Link></li>
+                </ul>
+
+                <h3>Notas</h3>
+
+                <ul>
+                    <li><Link to="/notas">Lançamento de notas</Link></li>
+                    <li><Link to="/relatorio">Relatório e média da sala</Link></li>
+                </ul>
+
             </div>
 
         </div>
